@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>转念 · 小赛</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+<style>
+/* ─────────────────────────────────────────
+   转念 · 小赛 —— 平静 / 留白 / 单一沉静青绿强调色
+   思源黑体 / 线性 Material Icons / 仅淡入
+   ───────────────────────────────────────── */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#1A2420;
+  --t2:#3C4843;--t3:#6B7670;--t4:#9DA8A2;--t5:#CDD5D0;
+  --bg:#FFFFFF;--bg2:#F5F8F6;--bg3:#EEF3F0;
+  --bd:#E3EAE6;--bd2:#CFD9D3;
+  --accent:#3E6B5E;--accent-soft:#EDF3F0;
+  --r:8px;--rs:5px;
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+html,body{min-height:100vh}
+body{
+  font-family:'Noto Sans SC','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+  font-weight:400;
+  background:var(--bg);color:var(--ink);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+}
+.mi{font-family:'Material Icons Outlined';font-weight:normal;font-style:normal;display:inline-block;line-height:1;text-transform:none;letter-spacing:normal;word-wrap:normal;white-space:nowrap;direction:ltr;font-feature-settings:'liga';-webkit-font-smoothing:antialiased;vertical-align:middle;font-size:inherit}
+
+/* Header */
+.hd{position:fixed;top:0;left:0;right:0;height:58px;background:rgba(255,255,255,.95);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 32px;z-index:100;backdrop-filter:saturate(1.2) blur(6px)}
+.logo{font-size:13px;font-weight:700;letter-spacing:.6px;color:var(--ink)}
+.logo em{color:var(--accent);font-style:normal;font-weight:700}
+.hd-sub{font-size:11px;font-weight:500;color:var(--t4);letter-spacing:1px}
+
+/* Main */
+.main{padding-top:58px;min-height:100vh}
+
+/* Toast */
+.toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:12px 22px;border-radius:var(--r);font-size:13px;font-weight:500;opacity:0;transition:opacity .2s var(--ease),transform .2s var(--ease);z-index:200;white-space:nowrap;pointer-events:none;display:flex;align-items:center;gap:8px}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.fi{animation:fi .4s var(--ease)}
+
+/* ─── Cover ─── */
+#sCover{
+  position:fixed;inset:0;z-index:120;
+  display:flex;flex-direction:column;justify-content:center;
+  background:
+    radial-gradient(120% 80% at 50% -10%, #DCEAE3 0%, rgba(220,234,227,0) 55%),
+    linear-gradient(180deg,#F7FAF8 0%,#EAF1ED 60%,#E2ECE7 100%);
+  animation:fi 1s var(--ease);
+}
+.cover-box{text-align:center;padding:0 32px;max-width:680px;margin:0 auto;width:100%;
+  animation:su .8s var(--ease) .25s both}
+@keyframes su{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.cover-en{font-size:11px;letter-spacing:6px;font-weight:700;color:var(--accent);margin-bottom:36px;text-transform:uppercase}
+.cover-title{font-size:62px;font-weight:900;color:var(--ink);letter-spacing:6px;line-height:1.1;margin-bottom:28px}
+.cover-sub{font-size:15.5px;color:var(--t2);margin-bottom:48px;line-height:2;letter-spacing:.4px}
+.btn-enter{display:inline-flex;align-items:center;gap:10px;padding:16px 38px;background:var(--ink);color:var(--bg);border:none;border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;letter-spacing:1px;transition:background .2s var(--ease)}
+.btn-enter:hover{background:var(--accent)}
+.btn-enter .mi{font-size:18px}
+
+/* Setup */
+.setup{max-width:540px;margin:0 auto;padding:108px 32px 64px}
+.eyebrow{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:22px;display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';width:24px;height:2px;background:var(--accent);display:inline-block}
+.setup h1{font-size:48px;font-weight:900;letter-spacing:-1px;line-height:1.12;margin-bottom:22px;color:var(--ink)}
+.setup>p{font-size:16px;color:var(--t2);line-height:1.8;margin-bottom:42px;max-width:460px}
+.fg{margin-bottom:24px}
+.fl{display:block;font-size:12px;font-weight:600;margin-bottom:8px;color:var(--t2);letter-spacing:.6px;text-transform:uppercase}
+.fi-input{width:100%;padding:14px 0;border:none;border-bottom:1.5px solid var(--bd2);border-radius:0;font-size:16px;font-family:inherit;color:var(--ink);background:transparent;transition:border-color .2s var(--ease);outline:none;font-weight:500}
+.fi-input:hover{border-color:var(--t3)}
+.fi-input:focus{border-color:var(--accent)}
+.fi-input::placeholder{color:var(--t4);font-weight:400}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px 20px;background:var(--ink);color:var(--bg);border:none;border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;transition:background .2s var(--ease),opacity .2s;font-family:inherit;margin-top:12px;letter-spacing:.5px}
+.btn:hover{background:var(--accent)}
+.btn:disabled{opacity:.3;cursor:not-allowed;background:var(--ink)}
+.btn .mi{font-size:18px}
+.adv-t{font-size:13px;color:var(--t3);cursor:pointer;text-align:center;margin-top:24px;padding:8px;transition:color .15s;display:inline-flex;align-items:center;gap:6px;justify-content:center;width:100%}
+.adv-t:hover{color:var(--ink)}
+.adv-p{display:none;margin-top:18px;padding:22px;background:var(--bg2);border-radius:var(--r);border:1px solid var(--bd)}
+.adv-p.open{display:block;animation:fi .25s var(--ease)}
+.info-card{font-size:13px;color:var(--t2);line-height:1.85}
+.info-card .info-t{display:block;font-size:11px;font-weight:700;color:var(--ink);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px}
+.info-card em{color:var(--accent);font-style:normal;font-weight:600}
+.hint{font-size:12px;color:var(--t4);margin-top:8px;line-height:1.55}
+
+/* Chat */
+.chat{max-width:680px;margin:0 auto;padding:54px 32px 168px}
+.sh{margin-bottom:40px}
+.st{font-size:30px;font-weight:900;letter-spacing:-.5px;line-height:1.2;color:var(--ink)}
+.sd2{font-size:14.5px;color:var(--t2);margin-top:12px;line-height:1.7;max-width:520px}
+
+/* Messages */
+.msgs{display:flex;flex-direction:column;gap:22px}
+.msg{display:flex;gap:13px;animation:fi .35s var(--ease)}
+.msg.u{flex-direction:row-reverse}
+.av{width:32px;height:32px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;font-weight:600;color:var(--accent)}
+.msg.u .av{background:var(--ink);color:var(--bg);border-color:var(--ink);font-size:13px}
+.av .mi{font-size:18px;color:var(--accent)}
+.bub{max-width:80%;padding:14px 18px;border-radius:10px;font-size:15px;line-height:1.78}
+.msg.ai .bub{background:var(--bg2);color:var(--ink);border:1px solid var(--bd)}
+.msg.u .bub{background:var(--ink);color:var(--bg)}
+
+/* Archive bubble */
+.msg.archive .bub{background:var(--bg);border:1px solid var(--bd2);border-left:3px solid var(--accent);max-width:100%;padding:26px 30px;border-radius:var(--r)}
+.bub .rs-hr{border:none;border-top:1px solid var(--bd);margin:14px 0}
+
+/* Loading */
+.ld{display:flex;gap:5px;padding:14px 18px;background:var(--bg2);border:1px solid var(--bd);border-radius:10px;width:fit-content}
+.ld-d{width:6px;height:6px;border-radius:50%;background:var(--t3);animation:bounce 1.4s infinite}
+.ld-d:nth-child(2){animation-delay:.18s}.ld-d:nth-child(3){animation-delay:.36s}
+@keyframes bounce{0%,80%,100%{opacity:.3}40%{opacity:1}}
+
+/* Input area */
+.ia{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.96);border-top:1px solid var(--bd);padding:16px 32px;backdrop-filter:saturate(1.2) blur(6px)}
+.ic{max-width:680px;margin:0 auto;display:flex;gap:12px;align-items:flex-end}
+.ci{flex:1;padding:13px 16px;border:1.5px solid var(--bd2);border-radius:var(--r);font-size:15px;font-family:inherit;color:var(--ink);background:var(--bg);resize:none;outline:none;min-height:46px;max-height:140px;line-height:1.55;transition:border-color .15s var(--ease)}
+.ci:hover{border-color:var(--t3)}
+.ci:focus{border-color:var(--accent)}
+.sb{width:46px;height:46px;background:var(--ink);color:var(--bg);border:none;border-radius:var(--r);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s var(--ease)}
+.sb:hover{background:var(--accent)}
+.sb:disabled{opacity:.3;cursor:not-allowed;background:var(--t4)}
+.sb .mi{font-size:20px;color:var(--bg)}
+
+/* End / action bar */
+.endbar{max-width:680px;margin:36px auto 0;padding-top:28px;border-top:1px solid var(--bd);text-align:center}
+.endbar .ehint{font-size:13.5px;color:var(--t3);line-height:1.7;margin-bottom:20px}
+.act{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn2{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:var(--bg);color:var(--ink);border:1.5px solid var(--bd2);border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s var(--ease)}
+.btn2:hover{border-color:var(--accent);background:var(--bg2)}
+.btn2 .mi{font-size:16px;color:var(--accent)}
+.btn3{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:var(--ink);color:var(--bg);border:none;border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .15s var(--ease)}
+.btn3:hover{background:var(--accent)}
+.btn3 .mi{font-size:16px;color:var(--bg)}
+
+/* Paragraph rhythm + highlight */
+.bub p{margin:0 0 12px}
+.bub p:last-child{margin-bottom:0}
+.hl{color:var(--accent);font-weight:700}
+.msg.u .bub .hl{color:var(--bg)}
+
+/* Mobile */
+@media(max-width:600px){
+  .hd{padding:0 18px}
+  .hd-sub{display:none}
+  .cover-title{font-size:42px;letter-spacing:3px}
+  .cover-sub{font-size:14px}
+  .setup{padding:84px 22px 56px}
+  .setup h1{font-size:34px}
+  .setup>p{font-size:15px}
+  .chat{padding:40px 20px 150px}
+  .st{font-size:25px}
+  .bub{max-width:88%;font-size:14.5px;padding:12px 15px}
+  .msg.archive .bub{padding:20px 20px}
+  .ia{padding:13px 16px}
+}
+</style>
+</head>
+<body>
+<header class="hd">
+  <div class="logo">转念 · <em>小赛</em></div>
+  <div class="hd-sub">一念之转 · 完全私密</div>
+</header>
+<main class="main" id="app"></main>
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────
+// API key 与系统提示词都不在前端。所有请求走 /api/chat（本地）或
+// /.netlify/functions/chat（线上），由后端持有密钥并注入提示词。
+const PRESET = {
+  // 飞书归档机器人 webhook（如需更换，改这里即可）
+  feishu: 'https://open.feishu.cn/open-apis/bot/v2/hook/6c2e4765-9a7c-4f51-873e-64e985f8faa5',
+};
+
+// 触发开场白用的隐藏信号（不在界面显示）
+const KICKOFF = '（这是系统自动触发信号，不是用户发言。请直接执行"七、启动指令"，输出开场白，不要复述这条信号。）';
+
+// ── STATE ─────────────────────────────────────────────────
+const S = {
+  screen: 'cover',   // cover | setup | chat
+  name: '',
+  msgs: [],          // msgs[0] 为隐藏触发信号，界面从 index 1 开始显示
+  busy: false,
+  done: false,
+};
+
+// ── API ───────────────────────────────────────────────────
+async function ask() {
+  const endpoint = location.hostname.includes('netlify')
+    ? '/.netlify/functions/chat'
+    : '/api/chat';
+  // 本地与线上都先尝试 /api/chat，失败再退回 functions 路径
+  const r = await fetch('/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: S.name, messages: S.msgs }),
+  }).catch(() => null);
+
+  let resp = r;
+  if (!resp || resp.status === 404) {
+    resp = await fetch('/.netlify/functions/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: S.name, messages: S.msgs }),
+    });
+  }
+  if (!resp.ok) {
+    const e = await resp.json().catch(() => ({}));
+    throw new Error(e.error?.message || `HTTP ${resp.status}`);
+  }
+  const data = await resp.json();
+  return data.choices[0].message.content;
+}
+
+// ── CONVERSATION ──────────────────────────────────────────
+async function startConversation() {
+  if (S.msgs.length) return;
+  S.msgs.push({ role: 'user', content: KICKOFF });
+  S.busy = true; render();
+  try {
+    const reply = await ask();
+    S.msgs.push({ role: 'assistant', content: reply });
+  } catch (e) {
+    toast('接口错误：' + e.message);
+    S.msgs = [];
+  }
+  S.busy = false; render();
+}
+
+async function userSays(text) {
+  if (S.busy || S.done) return;
+  S.msgs.push({ role: 'user', content: text });
+  S.busy = true; render();
+  try {
+    const reply = await ask();
+    S.msgs.push({ role: 'assistant', content: reply });
+    if (isArchive(reply)) S.done = true;
+  } catch (e) {
+    toast('接口错误：' + e.message);
+    S.msgs.pop();
+  }
+  S.busy = false; render();
+}
+
+// 识别 AI 是否已输出存档 / 收尾
+function isArchive(t) {
+  if (!t) return false;
+  return /带着它走/.test(t) || (/📌/.test(t) && /我今天带走的/.test(t));
+}
+
+// ── ARCHIVE EXTRACT ───────────────────────────────────────
+function getArchiveText() {
+  // 取最后一条包含存档标记的助手消息
+  for (let i = S.msgs.length - 1; i >= 0; i--) {
+    const m = S.msgs[i];
+    if (m.role === 'assistant' && /📌/.test(m.content)) return m.content.trim();
+  }
+  // 退而求其次：整段对话
+  return S.msgs.slice(1)
+    .map(m => (m.role === 'user' ? '我：' : '小赛：') + m.content)
+    .join('\n\n');
+}
+
+async function sendFeishu() {
+  if (!PRESET.feishu) { toast('未配置飞书 Webhook'); return; }
+  const text = `《转念》存档\n姓名：${S.name || '（匿名）'}\n日期：${new Date().toLocaleDateString('zh-CN')}\n\n${getArchiveText()}`.slice(0, 4000);
+  try {
+    await fetch(PRESET.feishu, {
+      method: 'POST', mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ msg_type: 'text', content: { text } }),
+    });
+    toast('已发送到飞书');
+  } catch (e) { toast('发送失败：' + e.message); }
+}
+
+function copyAll() {
+  navigator.clipboard.writeText(getArchiveText())
+    .then(() => toast('已复制存档'))
+    .catch(() => toast('请手动选择文本复制'));
+}
+
+// ── RENDER ────────────────────────────────────────────────
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+function esc(s) {
+  return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function fmt(t) {
+  if (!t) return '';
+  let s = String(t)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/【([^】\n]+?)】/g, '<strong class="hl">【$1】</strong>');
+  return s.split(/\n{2,}/).map(p => {
+    p = p.trim();
+    if (!p) return '';
+    if (/^[-—]{3,}$/.test(p)) return '<hr class="rs-hr">';
+    return '<p>' + p.replace(/\n/g, '<br>') + '</p>';
+  }).join('');
+}
+
+function render() {
+  const app = document.getElementById('app');
+  const hd = document.querySelector('.hd');
+  if (S.screen === 'cover') {
+    hd.style.display = 'none';
+    app.innerHTML = renderCover();
+  } else {
+    hd.style.display = '';
+    if (S.screen === 'setup') app.innerHTML = renderSetup();
+    else { app.innerHTML = renderChat(); maybeStart(); }
+  }
+  setTimeout(() => {
+    if (S.screen === 'chat') window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }, 80);
+}
+
+function renderCover() {
+  return `<div id="sCover"><div class="cover-box">
+    <div class="cover-en">The Work · 一念之转</div>
+    <div class="cover-title">转念</div>
+    <div class="cover-sub">小赛陪你把那个让你沉的念头，放下来看一看。<br>一次安静的对话 · 约 15–25 分钟 · 完全私密</div>
+    <button class="btn-enter" onclick="doEnter()">开始 <span class="mi">arrow_forward</span></button>
+  </div></div>`;
+}
+
+function renderSetup() {
+  return `<div class="setup fi">
+    <div class="eyebrow">转念 · 一念之转</div>
+    <h1>把那个念头<br>放下来看看</h1>
+    <p>你好，我是小赛。<br>我不解决问题，也不给建议。我只陪你看见让你痛苦的那个念头，然后陪你质疑它。<br>走的时候，你会带走一句自己说出来的话。</p>
+    <div class="fg">
+      <label class="fl">我可以怎么称呼你</label>
+      <input class="fi-input" id="iName" type="text" placeholder="输入你的名字或昵称" value="${esc(S.name)}" onkeydown="if(event.key==='Enter')doStart()">
+    </div>
+    <button class="btn" onclick="doStart()">进入对话 <span class="mi">arrow_forward</span></button>
+    <div class="adv-t" onclick="this.nextElementSibling.classList.toggle('open')"><span class="mi" style="font-size:16px">lock</span> 关于隐私与安全</div>
+    <div class="adv-p">
+      <div class="info-card">
+        <span class="info-t">你的对话是私密的</span>
+        这段对话只在你的浏览器里进行，不做任何登录与留存。<br>
+        AI 的 <em>API 密钥</em> 与 <em>引导方法论</em> 都保存在服务器端，前端无法看到、也无法被他人抓取。<br>
+        如果对话中你提到伤害自己的念头，小赛会暂停引导，请你联系信任的人或拨打全国心理援助热线 <em>400-161-9995</em>。
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderChat() {
+  const visible = S.msgs.slice(1);
+  const msgHtml = visible.map(m => {
+    const isU = m.role === 'user';
+    const isArc = !isU && /📌/.test(m.content);
+    const cls = isU ? 'u' : (isArc ? 'ai archive' : 'ai');
+    return `<div class="msg ${cls}">
+      <div class="av">${isU ? esc((S.name || '我').slice(0, 1)) : '<span class="mi">spa</span>'}</div>
+      <div class="bub">${fmt(m.content)}</div>
+    </div>`;
+  }).join('');
+
+  const loading = S.busy
+    ? `<div class="msg ai"><div class="av"><span class="mi">spa</span></div><div class="ld"><div class="ld-d"></div><div class="ld-d"></div><div class="ld-d"></div></div></div>`
+    : '';
+
+  const endbar = S.done
+    ? `<div class="endbar fi">
+        <div class="ehint">这句话是你自己说出来的。<br>你可以把这份存档留住。</div>
+        <div class="act">
+          <button class="btn2" onclick="copyAll()"><span class="mi">content_copy</span> 复制存档</button>
+          <button class="btn3" onclick="sendFeishu()"><span class="mi">send</span> 发送到飞书</button>
+        </div>
+      </div>`
+    : '';
+
+  const inputArea = (!S.done && !S.busy)
+    ? `<div class="ia"><div class="ic">
+        <textarea class="ci" id="ci" placeholder="把你心里真实的话说给小赛" rows="1" onkeydown="onKey(event)" oninput="autoH(this)"></textarea>
+        <button class="sb" onclick="doSend()"><span class="mi">send</span></button>
+      </div></div>`
+    : '';
+
+  return `<div class="chat fi">
+    <div class="sh">
+      <div class="st">${esc(S.name || '你')}，我在这里。</div>
+      <div class="sd2">不用整理，想到什么说什么。每次说一件就好，我会陪着你慢慢往里走。</div>
+    </div>
+    <div class="msgs">${msgHtml}${loading}</div>
+    ${endbar}
+  </div>${inputArea}`;
+}
+
+// ── AUTO-START ────────────────────────────────────────────
+function maybeStart() {
+  if (!S.busy && !S.msgs.length) setTimeout(startConversation, 120);
+}
+
+// ── EVENTS ────────────────────────────────────────────────
+window.doEnter = () => { S.screen = 'setup'; render(); };
+
+window.doStart = () => {
+  const name = (document.getElementById('iName')?.value || '').trim();
+  if (!name) { toast('先告诉我怎么称呼你吧'); return; }
+  S.name = name;
+  S.screen = 'chat';
+  render();
+};
+
+window.doSend = () => {
+  const el = document.getElementById('ci');
+  const txt = (el?.value || '').trim();
+  if (!txt || S.busy) return;
+  el.value = '';
+  userSays(txt);
+};
+
+window.onKey = (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); doSend(); }
+};
+
+window.autoH = (el) => {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 140) + 'px';
+};
+
+window.copyAll = copyAll;
+window.sendFeishu = sendFeishu;
+
+// ── INIT ──────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
